@@ -1,18 +1,17 @@
-
 #include <iostream>
 #include <string>
 #include <limits>
 using namespace std;
 
 // ================= FUNCTION DECLARATIONS =================
-// g++ -std=c++17 main.cpp patient.cpp appointment.cpp file.cpp -o hospital.exe
+// g++ -std=c++17 main.cpp patient.cpp appointment.cpp file.cpp 
+// -o hospital.exe
 //.\hospital.exe
 // Patient functions
-int addPatient(int id, string name, int age, string gender,
-               string phone, string disease);
+int addPatient(int id, string name, int age, string gender,string phone, string disease);
 
 int updatePatient(int id, string name, int age, string gender,
-                  string phone, string disease);
+string phone, string disease);
 
 int deletePatient(int id);
 int patientExists(int id);
@@ -22,10 +21,10 @@ void cleanupPatients();
 
 // Appointment functions
 int addAppointment(int aID, int pID, string doctor,
-                   string date, string time);
+string date, string time);
 
 int updateAppointment(int id, string doctor,
-                      string date, string time);
+string date, string time);
 
 int processNextAppointment();
 int cancelAppointment(int id);
@@ -42,6 +41,7 @@ void saveRecords();
 void loadRecords();
 
 // ================= PATIENT MENU =================
+int validGender(string gender);
 
 void patientMenu()
 {
@@ -72,51 +72,57 @@ void patientMenu()
       cout << "Enter Name: ";
       getline(cin, name);
 
-      cout << "Enter Age: ";
-      cin >> age;
+cout << "Enter Age: ";
+cin >> age;
 
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      do
+{
+    cout << "Enter Gender (Male/Female): ";
+    getline(cin,gender);
 
-      cout << "Enter Gender: ";
-      getline(cin, gender);
-
-      cout << "Enter Phone: ";
-      getline(cin, phone);
-
-      cout << "Enter Disease: ";
-      getline(cin, disease);
-
-      if (addPatient(id, name, age, gender, phone, disease))
-        cout << "\nPatient added successfully.\n";
-      else
-        cout << "\nUnable to add patient. Check the details or ID.\n";
+    if (!validGender(gender))
+    {
+  cout << "Invalid gender! Enter Male or Female.\n";
     }
 
-    else if (choice == 2)
+} while (!validGender(gender));
+cin.ignore(numeric_limits<streamsize>::max(), '\n');
+cout << "Enter Phone: ";
+getline(cin, phone);
+
+cout << "Enter Disease: ";
+getline(cin, disease);
+if (addPatient(id, name, age, gender, phone, disease))
+cout << "\nPatient added successfully.\n";
+else
+cout << "\nUnable to add patient. Check the details or ID.\n";
+    }
+else if (choice == 2)
     {
-      int id, age;
-      string name, gender, phone, disease;
+ int id, age;
+string name, gender, phone, disease;
 
-      cout << "\nEnter Patient ID to update: ";
-      cin >> id;
+cout << "\nEnter Patient ID to update: ";
+cin >> id;
 
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-      cout << "Enter New Name: ";
-      getline(cin, name);
+cout << "Enter New Name: ";
+getline(cin, name);
 
-      cout << "Enter New Age: ";
-      cin >> age;
+cout << "Enter New Age: ";
+cin >> age;
 
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-      cout << "Enter New Gender: ";
-      getline(cin, gender);
+cout << "Enter New Gender: ";
+getline(cin, gender);
 
-      cout << "Enter New Phone: ";
-      getline(cin, phone);
+cout << "Enter New Phone: ";
+getline(cin, phone);
 
-      cout << "Enter New Disease: ";
+cout << "Enter New Disease: ";
       getline(cin, disease);
 
       if (updatePatient(id, name, age, gender, phone, disease))
@@ -195,16 +201,20 @@ void appointmentMenu()
 
       cout << "Enter Time: ";
       getline(cin, time);
+if (addAppointment(aID, pID, doctor, date, time))
+{
+cout << "\nAppointment added successfully.\n";
+saveRecords();
+}
 
-      if (addAppointment(aID, pID, doctor, date, time))
-        cout << "\nAppointment added successfully.\n";
-      else
-        cout << "\nUnable to add appointment. Check patient ID, appointment ID or doctor availability.\n";
+
+else
+  cout << "\nUnable to add appointment. Check patient ID, appointment ID or doctor availability.\n";
     }
 
-    else if (choice == 2)
+else if (choice == 2)
     {
-      int id;
+int id;
       string doctor, date, time;
 
       cout << "\nEnter Appointment ID: ";
