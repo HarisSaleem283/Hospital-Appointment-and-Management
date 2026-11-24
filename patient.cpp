@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cctype>
 using namespace std;
 
 struct PatientNode
@@ -12,7 +13,7 @@ struct PatientNode
   string disease;
   PatientNode *next;
 
-  PatientNode(int i, string n, int a, string g,string p, string d)
+  PatientNode(int i, string n, int a, string g, string p, string d)
   {
     id = i;
     name = n;
@@ -26,12 +27,26 @@ struct PatientNode
 
 PatientNode *head = NULL;
 
+// Check whether gender is Male or Female
+int validGender(string gender)
+{
+  for (int i = 0; i < gender.length(); i++)
+  {
+    gender[i] = tolower(gender[i]);
+  }
+
+  if (gender == "male" || gender == "female")
+    return 1;
+
+  return 0;
+}
+
 // Add a patient at the end of the linked list
 int addPatient(int id, string name, int age, string gender,
-  string phone, string disease)
+               string phone, string disease)
 {
   if (id <= 0 || name.empty() || age < 1 || age > 120 ||
-  gender.empty() || phone.empty() || disease.empty())
+      !validGender(gender) || phone.empty() || disease.empty())
   {
     return 0;
   }
@@ -87,7 +102,7 @@ int updatePatient(int id, string name, int age, string gender,
                   string phone, string disease)
 {
   if (name.empty() || age < 1 || age > 120 ||
-      gender.empty() || phone.empty() || disease.empty())
+      !validGender(gender) || phone.empty() || disease.empty())
   {
     return 0;
   }
